@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Function to write a sentence to a file
+void write_sentence() {
+    char sentence[100];
+    printf("Enter a sentence: ");
+    fgets(sentence, sizeof(sentence), stdin);
+    FILE *fp = fopen("data.txt", "w");
+    if (fp == NULL) {
+        perror("Error opening file");
+        exit(1);
+    }
+    fputs(sentence, fp);
+    fclose(fp);
+}
+
+// Function to read and display the content of a file
+void read_sentence() {
+    FILE *fp = fopen("data.txt", "r");
+    if (fp == NULL) {
+        perror("Error opening file");
+        exit(1);
+    }
+    char ch;
+    while ((ch = fgetc(fp)) != EOF) {
+        printf("%c", ch);
+    }
+    fclose(fp);
+}
+
+// Function to append a sentence to a file
+void append_sentence() {
+    char sentence[100];
+    printf("Enter a sentence to append: ");
+    fgets(sentence, sizeof(sentence), stdin);
+    FILE *fp = fopen("data.txt", "a");
+    if (fp == NULL) {
+        perror("Error opening file");
+        exit(1);
+    }
+    fputs(sentence, fp);
+    fclose(fp);
+}
+
+int main() {
+    write_sentence();
+    read_sentence();
+    append_sentence();
+    read_sentence(); // To display the updated content
+    return 0;
+}
